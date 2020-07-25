@@ -34,7 +34,7 @@ class ClientController {
     @PostMapping
     @Operation(summary = "Insert a new client")
     fun insert(@RequestBody clientDTO : ClientInputDTO) : ResponseEntity<Void> {
-        val client = clientService.fromDTO(clientDTO)
+        val client = clientService.fromInputDTO(clientDTO)
         val clientInserted = clientService.insert(client)
         val uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(clientInserted.id).toUri()
         return ResponseEntity.created(uri).build()

@@ -45,7 +45,7 @@ class ClientOutputDTO(@JsonProperty("client_id")
                 @JsonProperty("rg")
                 val rg: String?,
                 @JsonProperty("addresses")
-                val addresses: List<Address>,
+                val addresses: List<AddressOutputDTO>,
                 @JsonProperty("inserted_on")
                 @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
                 val insertedOn: Instant,

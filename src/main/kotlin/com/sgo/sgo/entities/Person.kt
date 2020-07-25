@@ -18,17 +18,9 @@ data class Person (@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
                    open val name: String,
                    open val rg: String?,
                    @NotNull
-                   open val document: Long) {
-
-    val insertedOn: Instant
-        get() {
-            return insertedOn
-        }
-
-    val lastUpdate: Instant
-        get() {
-            return lastUpdate
-        }
+                   open val document: Long,
+                   open val insertedOn: Instant,
+                   open val lastUpdate: Instant) {
 
     @Schema(hidden = true)
     @OneToMany(mappedBy = "person")

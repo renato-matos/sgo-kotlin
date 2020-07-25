@@ -29,7 +29,7 @@ data class Address (@Id @GeneratedValue(strategy = GenerationType.AUTO)
 }
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-class InputAddressDTO(@JsonProperty("address_type")
+class AddressInputDTO(@JsonProperty("address_type")
                       val addressType: String,
                       @JsonProperty("street")
                       val street: String,
@@ -49,7 +49,7 @@ class InputAddressDTO(@JsonProperty("address_type")
                       val zipCode: String)
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-class OutputAddressDTO(@JsonProperty("address_id")
+class AddressOutputDTO(@JsonProperty("address_id")
                       val addressId: Long,
                       @JsonProperty("address_type")
                       val addressType: String,
