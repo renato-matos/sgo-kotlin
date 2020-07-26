@@ -53,7 +53,7 @@ class ClientService {
     fun fromInputDTO(clientDTO: ClientInputDTO): Client {
         val client = Client(0)
         val personType : PersonType = enumValueOf(clientDTO.personType)
-        client.person = Person(0,EntityType.CLIENT,personType,clientDTO.name, clientDTO.name, clientDTO.document, Instant.now(),
+        client.person = Person(0,EntityType.CLIENT,personType,clientDTO.name, clientDTO.rg, clientDTO.document, Instant.now(),
                         Instant.now())
         val addresses : MutableList<Address> = mutableListOf()
         clientDTO.addresses.forEach {

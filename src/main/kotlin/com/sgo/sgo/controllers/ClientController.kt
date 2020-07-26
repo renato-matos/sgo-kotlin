@@ -34,9 +34,16 @@ class ClientController {
     lateinit var addressService: AddressService
 
     @GetMapping
-    @Operation(summary = "List all clients")
-    fun listAll() : ResponseEntity<List<ClientOutputDTO>> {
-        val clients = clientService.listAll()
+    @Operation(summary = "List clients")
+    fun listAll(@RequestParam(value="name", required = false) name: String?,
+                @RequestParam(value="document", required = false) document: Long?) : ResponseEntity<List<ClientOutputDTO>> {
+        var clients = clientService.listAll()
+        if(name!=null) {
+            clients = clients.filter { it.name == name }
+        }
+        if (document!=null) {
+            clients = clients.filter { it.document == document }
+        }
         return ResponseEntity.ok().body(clients)
     }
 
