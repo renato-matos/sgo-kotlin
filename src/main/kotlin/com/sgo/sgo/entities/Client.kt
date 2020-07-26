@@ -8,6 +8,10 @@ import com.sgo.sgo.entities.enums.PersonType
 import java.time.Instant
 import java.util.*
 import javax.persistence.*
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
 
 @Entity
 data class Client (@Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,8 +21,9 @@ data class Client (@Id @GeneratedValue(strategy = GenerationType.AUTO)
 
 }
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 class ClientInputDTO(@JsonProperty("name")
+                     @field:NotBlank(message = "teste de validação do nome")
                      val name: String,
                      @JsonProperty("person_type")
                      val personType: String,

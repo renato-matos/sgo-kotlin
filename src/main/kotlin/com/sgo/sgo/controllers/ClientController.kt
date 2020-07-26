@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.net.URI
+import javax.validation.Valid
+import javax.validation.Validator
 
 @RestController
 @RequestMapping("/clients")
@@ -39,7 +41,7 @@ class ClientController {
 
     @PostMapping
     @Operation(summary = "Insert a new client")
-    fun insert(@RequestBody clientDTO : ClientInputDTO) : ResponseEntity<Void> {
+    fun insert(@Valid @RequestBody clientDTO : ClientInputDTO) : ResponseEntity<Void> {
         val client = clientService.fromInputDTO(clientDTO)
         val personInserted = personService.insert(client.person)
         client.person.addresses.forEach {
