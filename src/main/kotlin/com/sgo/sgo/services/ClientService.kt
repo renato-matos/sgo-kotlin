@@ -4,7 +4,9 @@ import com.sgo.sgo.data.ClientRepository
 import com.sgo.sgo.entities.*
 import com.sgo.sgo.entities.enums.EntityType
 import com.sgo.sgo.entities.enums.PersonType
+import com.sgo.sgo.exceptions.ResourceNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.Instant
 
@@ -59,6 +61,17 @@ class ClientService {
         }
         client.person.addresses = addresses
         return client
+    }
+
+    fun findById(id: Long): ClientOutputDTO {
+        val client : Client? = clientRepository.findByIdOrNull(id)
+        if(client==null) {
+            throw ResourceNotFoundException(id)
+        } else {
+            return toOutputDto(client)
+        }
+
+
     }
 
 }

@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.net.URI
@@ -39,10 +40,19 @@ class ClientController {
         return ResponseEntity.ok().body(clients)
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary="Find a client by id")
+    fun findById(@PathVariable id: Long) : ResponseEntity<ClientOutputDTO> {
+        val client = clientService.findById(id)
+        return ResponseEntity.ok().body(client)
+    }
+
     @PostMapping
     @Operation(summary = "Insert a new client")
     fun insert(@Valid @RequestBody clientDTO : ClientInputDTO) : ResponseEntity<Void> {
+        //TODO Incluir a validação dos campos no DTO de maneira que funcione
         val client = clientService.fromInputDTO(clientDTO)
+        //TODO Incluir validação se o CPF já existe
         val personInserted = personService.insert(client.person)
         client.person.addresses.forEach {
             it.person=personInserted

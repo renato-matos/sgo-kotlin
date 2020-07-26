@@ -18,4 +18,12 @@ class ResourceExceptionHandler {
         val se = StandardError(Instant.now(), status.value(), error, e.message, request.requestURI)
         return ResponseEntity.status(status).body(se)
     }
+
+    @ExceptionHandler(ResourceNotFoundException::class)
+    fun resourceNotFoundException(e: ResourceNotFoundException, request: HttpServletRequest) : ResponseEntity<StandardError> {
+        val error = "Resource Not Found"
+        val status: HttpStatus = HttpStatus.NOT_FOUND
+        val se = e.message?.let { StandardError(Instant.now(), status.value(), error, it, request.requestURI) }
+        return ResponseEntity.status(status).body(se)
+    }
 }
