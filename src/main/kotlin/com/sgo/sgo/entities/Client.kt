@@ -27,7 +27,7 @@ class ClientInputDTO(@JsonProperty("name")
                      @JsonProperty("rg")
                      val rg: String?,
                      @JsonProperty("addresses")
-                     val addresses: List<Address>
+                     val addresses: List<AddressInputDTO>
 )
 
 

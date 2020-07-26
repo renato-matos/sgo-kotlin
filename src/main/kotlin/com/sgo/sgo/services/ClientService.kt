@@ -1,12 +1,12 @@
 package com.sgo.sgo.services
 
 import com.sgo.sgo.data.ClientRepository
-import com.sgo.sgo.entities.AddressOutputDTO
-import com.sgo.sgo.entities.Client
-import com.sgo.sgo.entities.ClientInputDTO
-import com.sgo.sgo.entities.ClientOutputDTO
+import com.sgo.sgo.entities.*
+import com.sgo.sgo.entities.enums.EntityType
+import com.sgo.sgo.entities.enums.PersonType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.time.Instant
 
 @Service
 class ClientService {
@@ -50,7 +50,14 @@ class ClientService {
 
     fun fromInputDTO(clientDTO: ClientInputDTO): Client {
         val client = Client(0)
-        client.person.addresses = clientDTO.addresses
+        val personType : PersonType = enumValueOf(clientDTO.personType)
+        client.person = Person(0,EntityType.CLIENT,personType,clientDTO.name, clientDTO.name, clientDTO.document, Instant.now(),
+                        Instant.now())
+        val addresses : MutableList<Address> = mutableListOf()
+        clientDTO.addresses.forEach {
+            addresses.add(addressService.fromInputDTO(it))
+        }
+        client.person.addresses = addresses
         return client
     }
 

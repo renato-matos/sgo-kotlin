@@ -3,7 +3,9 @@ package com.sgo.sgo.controllers
 import com.sgo.sgo.entities.Client
 import com.sgo.sgo.entities.ClientInputDTO
 import com.sgo.sgo.entities.ClientOutputDTO
+import com.sgo.sgo.services.AddressService
 import com.sgo.sgo.services.ClientService
+import com.sgo.sgo.services.PersonService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -22,10 +24,14 @@ class ClientController {
     @Autowired
     lateinit var clientService: ClientService
 
+    @Autowired
+    lateinit var personService: PersonService
+
+    @Autowired
+    lateinit var addressService: AddressService
+
     @GetMapping
     @Operation(summary = "List all clients")
-//    @ApiResponse(responseCode = "200", description = "Listed clients", content = [(Content(mediaType = "application/json",
-//                schema = Schema(implementation = ClientDTO::class)))])
     fun listAll() : ResponseEntity<List<ClientOutputDTO>> {
         val clients = clientService.listAll()
         return ResponseEntity.ok().body(clients)
@@ -35,6 +41,11 @@ class ClientController {
     @Operation(summary = "Insert a new client")
     fun insert(@RequestBody clientDTO : ClientInputDTO) : ResponseEntity<Void> {
         val client = clientService.fromInputDTO(clientDTO)
+        val personInserted = personService.insert(client.person)
+        client.person.addresses.forEach {
+            it.person=personInserted
+            addressService.insert(it)
+        }
         val clientInserted = clientService.insert(client)
         val uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(clientInserted.id).toUri()
         return ResponseEntity.created(uri).build()

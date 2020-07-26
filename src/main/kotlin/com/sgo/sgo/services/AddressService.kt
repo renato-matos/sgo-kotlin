@@ -16,6 +16,10 @@ class AddressService {
     @Autowired
     lateinit var addressRepository: AddressRepository
 
+    fun insert(address: Address) : Address {
+        return addressRepository.save(address)
+    }
+
     fun toOutputDTO(address: Address) : AddressOutputDTO {
         return AddressOutputDTO(address.id,
                                 address.addressType.toString(),

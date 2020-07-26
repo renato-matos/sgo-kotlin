@@ -11,7 +11,7 @@ class PersonService {
     @Autowired
     lateinit var personRepository: PersonRepository
 
-    fun insertPerson(person: Person) : Person {
+    fun insert(person: Person) : Person {
         return personRepository.save(person)
     }
 }
