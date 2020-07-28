@@ -8,6 +8,7 @@ import com.sgo.sgo.entities.enums.PersonType
 import java.time.Instant
 import java.util.*
 import javax.persistence.*
+import javax.validation.constraints.NotEmpty
 
 @Entity
 data class Supplier (@Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,7 +27,40 @@ data class Supplier (@Id @GeneratedValue(strategy = GenerationType.AUTO)
 }
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-class SupplierDTO(@JsonProperty("supplier_id")
+class SupplierInputDTO(@JsonProperty("name")
+                        @NotEmpty
+                        val name: String,
+                        @JsonProperty("person_type")
+                        @NotEmpty
+                        val personType: String,
+                        @JsonProperty("document")
+                        @NotEmpty
+                        val document: Long,
+                        @JsonProperty("rg")
+                        val rg: String?,
+                        @JsonProperty("activity_segment")
+                        @NotEmpty
+                        val activeSegment: String,
+                        @JsonProperty("contact")
+                        @NotEmpty
+                        val contact: String,
+                        @JsonProperty("ccm")
+                        val ccm: String?,
+                        @JsonProperty("ie")
+                        val ie: String?,
+                        @JsonProperty("email")
+                        val email: String?,
+                        @JsonProperty("site")
+                        val site: String?,
+                        @JsonProperty("comments")
+                        val comments: String?,
+                        @JsonProperty("addresses")
+                        @NotEmpty
+                        val addresses: List<Address>
+)
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+class SupplierOutputDTO(@JsonProperty("supplier_id")
                 val supplierId: Long,
                 @JsonProperty("person_id")
                 val personId: Long,

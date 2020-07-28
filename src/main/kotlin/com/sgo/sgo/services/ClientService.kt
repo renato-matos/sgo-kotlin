@@ -74,4 +74,31 @@ class ClientService {
 
     }
 
+    fun listClients(document: Long?, name: String?) : List<ClientOutputDTO>? {
+        var clients: MutableList<ClientOutputDTO> = mutableListOf()
+        if (document!=null) {
+            val client : Client? = clientRepository.findByDocument(document)
+            if (client != null) {
+                clients.add(toOutputDto(client))
+                return clients
+            } else {
+                return null
+            }
+        }
+
+        if (name!=null) {
+            val clientsFound : List<Client?> = clientRepository.findByName(name)
+            if (clientsFound != null) {
+                clientsFound.forEach {
+                    clients.add(toOutputDto(it!!))
+                }
+                return clients
+            } else {
+                return null
+            }
+        }
+
+        return listAll()
+    }
+
 }

@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.net.URI
+import javax.transaction.Transactional
 import javax.validation.Valid
 import javax.validation.Validator
 
@@ -37,14 +38,8 @@ class ClientController {
     @Operation(summary = "List clients")
     fun listAll(@RequestParam(value="name", required = false) name: String?,
                 @RequestParam(value="document", required = false) document: Long?) : ResponseEntity<List<ClientOutputDTO>> {
-        var clients = clientService.listAll()
-        //TODO Implementar a lógica de filtro dentro do serviço
-        if(name!=null) {
-            clients = clients.filter { it.name == name }
-        }
-        if (document!=null) {
-            clients = clients.filter { it.document == document }
-        }
+        //TODO Implementar a decodificação dos parâmetros da chamada
+        var clients = clientService.listClients(document, name)
         return ResponseEntity.ok().body(clients)
     }
 
@@ -57,10 +52,9 @@ class ClientController {
 
     @PostMapping
     @Operation(summary = "Insert a new client")
+    @Transactional
     fun insert(@Valid @RequestBody clientDTO : ClientInputDTO) : ResponseEntity<Void> {
-        //TODO Incluir a validação dos campos no DTO de maneira que funcione
         val client = clientService.fromInputDTO(clientDTO)
-        //TODO Incluir validação se o CPF já existe
         val personInserted = personService.insert(client.person)
         client.person.addresses.forEach {
             it.person=personInserted

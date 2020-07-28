@@ -54,4 +54,13 @@ class ResourceExceptionHandler {
         val se = e.message?.let { StandardError(Instant.now(), status.value(), error, it, request.requestURI) }
         return ResponseEntity.status(status).body(se)
     }
+
+    @ExceptionHandler(ExistingPersonException::class)
+    fun existingPersonException(e: ExistingPersonException, request: HttpServletRequest) : ResponseEntity<StandardError> {
+        val error = "Duplicated person"
+        val status: HttpStatus = HttpStatus.CONFLICT
+        val se = e.message?.let { StandardError(Instant.now(), status.value(), error, it, request.requestURI) }
+        return ResponseEntity.status(status).body(se)
+    }
+
 }

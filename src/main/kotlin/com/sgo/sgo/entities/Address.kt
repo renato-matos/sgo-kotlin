@@ -7,6 +7,7 @@ import com.sgo.sgo.entities.enums.AddressType
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.Instant
 import javax.persistence.*
+import javax.validation.constraints.NotEmpty
 
 @Entity
 data class Address (@Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,22 +31,30 @@ data class Address (@Id @GeneratedValue(strategy = GenerationType.AUTO)
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class AddressInputDTO(@JsonProperty("address_type")
+                      @field:NotEmpty
                       val addressType: String,
                       @JsonProperty("street")
+                      @field:NotEmpty
                       val street: String,
                       @JsonProperty("number")
+                      @field:NotEmpty
                       val number: String,
                       @JsonProperty("complement")
                       val complement: String?,
                       @JsonProperty("neighborhood")
+                      @field:NotEmpty
                       val neighborhood: String,
                       @JsonProperty("city")
+                      @field:NotEmpty
                       val city: String,
                       @JsonProperty("state")
+                      @field:NotEmpty
                       val state: String,
                       @JsonProperty("country")
+                      @field:NotEmpty
                       val country: String,
                       @JsonProperty("zip_code")
+                      @field:NotEmpty
                       val zipCode: String)
 
 @JsonIgnoreProperties(ignoreUnknown = true)

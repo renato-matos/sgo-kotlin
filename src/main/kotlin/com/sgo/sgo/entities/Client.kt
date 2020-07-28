@@ -9,6 +9,7 @@ import java.time.Instant
 import javax.persistence.*
 import javax.validation.Valid
 import javax.validation.constraints.NotEmpty
+import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
 @Entity
@@ -19,17 +20,20 @@ data class Client (@Id @GeneratedValue(strategy = GenerationType.AUTO)
 
 }
 
-//@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 class ClientInputDTO(@JsonProperty("name")
                      @field:NotEmpty
                      val name: String,
                      @JsonProperty("person_type")
+                     @field:NotEmpty
                      val personType: String,
                      @JsonProperty("document")
+                     @field:NotNull
                      val document: Long,
                      @JsonProperty("rg")
                      val rg: String?,
                      @JsonProperty("addresses")
+                     @field:NotEmpty
                      val addresses: List<AddressInputDTO>
 )
 
