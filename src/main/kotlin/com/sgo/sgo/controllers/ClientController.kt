@@ -38,6 +38,7 @@ class ClientController {
     fun listAll(@RequestParam(value="name", required = false) name: String?,
                 @RequestParam(value="document", required = false) document: Long?) : ResponseEntity<List<ClientOutputDTO>> {
         var clients = clientService.listAll()
+        //TODO Implementar a lógica de filtro dentro do serviço
         if(name!=null) {
             clients = clients.filter { it.name == name }
         }

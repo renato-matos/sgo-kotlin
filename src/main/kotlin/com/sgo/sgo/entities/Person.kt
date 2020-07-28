@@ -9,21 +9,21 @@ import javax.persistence.*
 
 @Entity
 data class Person (@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-                   open val id : Long,
+                   val id : Long,
                    @NotNull
-                   open val entityType: EntityType,
+                   val entityType: EntityType,
                    @NotNull
-                   open val personType: PersonType,
+                   val personType: PersonType,
                    @NotNull
-                   open val name: String,
-                   open val rg: String?,
+                   val name: String,
+                   val rg: String?,
                    @NotNull
-                   open val document: Long,
-                   open val insertedOn: Instant,
-                   open val lastUpdate: Instant) {
+                   val document: Long,
+                   val insertedOn: Instant,
+                   val lastUpdate: Instant) {
 
     @Schema(hidden = true)
     @OneToMany(mappedBy = "person")
-    open lateinit var addresses: List<Address>
+    lateinit var addresses: List<Address>
 
 }

@@ -3,10 +3,12 @@ package com.sgo.sgo.entities
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import org.springframework.validation.annotation.Validated
+import java.io.Serializable
 import java.time.Instant
 import javax.persistence.*
+import javax.validation.Valid
 import javax.validation.constraints.NotEmpty
-import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
 @Entity
@@ -19,7 +21,7 @@ data class Client (@Id @GeneratedValue(strategy = GenerationType.AUTO)
 
 //@JsonIgnoreProperties(ignoreUnknown = true)
 class ClientInputDTO(@JsonProperty("name")
-                     @field:NotEmpty(message="name validation test")
+                     @field:NotEmpty
                      val name: String,
                      @JsonProperty("person_type")
                      val personType: String,
