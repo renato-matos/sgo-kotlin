@@ -17,7 +17,7 @@ interface ClientRepository : JpaRepository<Client, Long> {
     @Query("select c from Client c JOIN c.person p where p.document = ?1")
     fun findByDocument(document: Long) : Client?
 
-    @Query("select c from Client c JOIN c.person p where p.name = ?1")
+    @Query("select c from Client c JOIN c.person p where p.name like ?1")
     fun findByName(name: String) : List<Client?>
 }
 
