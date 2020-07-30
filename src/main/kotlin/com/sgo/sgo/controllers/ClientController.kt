@@ -1,25 +1,18 @@
 package com.sgo.sgo.controllers
 
-import com.sgo.sgo.entities.Client
 import com.sgo.sgo.entities.ClientInputDTO
 import com.sgo.sgo.entities.ClientOutputDTO
 import com.sgo.sgo.services.AddressService
 import com.sgo.sgo.services.ClientService
 import com.sgo.sgo.services.PersonService
+import com.sgo.sgo.utils.decodeParam
 import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.media.Content
-import io.swagger.v3.oas.annotations.media.Schema
-import io.swagger.v3.oas.annotations.responses.ApiResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Controller
-import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
-import java.net.URI
 import javax.transaction.Transactional
 import javax.validation.Valid
-import javax.validation.Validator
 
 @RestController
 @RequestMapping("/clients")
@@ -38,8 +31,8 @@ class ClientController {
     @Operation(summary = "List clients")
     fun listAll(@RequestParam(value="name", required = false) name: String?,
                 @RequestParam(value="document", required = false) document: Long?) : ResponseEntity<List<ClientOutputDTO>> {
-        //TODO Implementar a decodificação dos parâmetros da chamada
-        var clients = clientService.listClients(document, name)
+        val nameToBeFound: String? = if (name!=null) decodeParam(name) else null
+        var clients = clientService.listClients(document, nameToBeFound)
         return ResponseEntity.ok().body(clients)
     }
 
