@@ -2,7 +2,7 @@ package com.sgo.sgo.controllers
 
 import com.sgo.sgo.entities.ClientInputDTO
 import com.sgo.sgo.entities.ClientOutputDTO
-import com.sgo.sgo.services.AddressService
+import com.sgo.sgo.services.PersonAddressService
 import com.sgo.sgo.services.ClientService
 import com.sgo.sgo.services.PersonService
 import com.sgo.sgo.utils.decodeParam
@@ -25,7 +25,7 @@ class ClientController {
     lateinit var personService: PersonService
 
     @Autowired
-    lateinit var addressService: AddressService
+    lateinit var personAddressService: PersonAddressService
 
     @GetMapping
     @Operation(summary = "List clients")
@@ -49,9 +49,9 @@ class ClientController {
     fun insert(@Valid @RequestBody clientDTO : ClientInputDTO) : ResponseEntity<Void> {
         val client = clientService.fromInputDTO(clientDTO)
         val personInserted = personService.insert(client.person)
-        client.person.addresses.forEach {
+        client.person.personAddresses.forEach {
             it.person=personInserted
-            addressService.insert(it)
+            personAddressService.insert(it)
         }
         val clientInserted = clientService.insert(client)
         val uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(clientInserted.id).toUri()

@@ -2,8 +2,8 @@ package com.sgo.sgo.services
 
 import com.sgo.sgo.data.ClientRepository
 import com.sgo.sgo.entities.*
-import com.sgo.sgo.entities.enums.EntityType
-import com.sgo.sgo.entities.enums.PersonType
+import com.sgo.sgo.entities.domains.EntityType
+import com.sgo.sgo.entities.domains.PersonType
 import com.sgo.sgo.exceptions.ResourceNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
@@ -17,7 +17,7 @@ class ClientService {
     lateinit var clientRepository: ClientRepository
 
     @Autowired
-    lateinit var addressService: AddressService
+    lateinit var personAddressService: PersonAddressService
 
     fun listAll() : List<ClientOutputDTO> {
         val clients = clientRepository.findAll()
@@ -34,8 +34,8 @@ class ClientService {
 
     private fun toOutputDto(client: Client) : ClientOutputDTO {
         val addresses : MutableList<AddressOutputDTO> = mutableListOf()
-        client.person.addresses.forEach {
-            addresses.add(addressService.toOutputDTO(it))
+        client.person.personAddresses.forEach {
+            addresses.add(personAddressService.toOutputDTO(it))
         }
 
         return ClientOutputDTO(
@@ -55,11 +55,11 @@ class ClientService {
         val personType : PersonType = enumValueOf(clientDTO.personType)
         client.person = Person(0,EntityType.CLIENT,personType,clientDTO.name, clientDTO.rg, clientDTO.document, Instant.now(),
                         Instant.now())
-        val addresses : MutableList<Address> = mutableListOf()
+        val personAddresses : MutableList<PersonAddress> = mutableListOf()
         clientDTO.addresses.forEach {
-            addresses.add(addressService.fromInputDTO(it))
+            personAddresses.add(personAddressService.fromInputDTO(it))
         }
-        client.person.addresses = addresses
+        client.person.personAddresses = personAddresses
         return client
     }
 

@@ -1,21 +1,14 @@
 package com.sgo.sgo.config
 
-import com.sgo.sgo.data.AddressRepository
-import com.sgo.sgo.data.ClientRepository
-import com.sgo.sgo.data.PersonRepository
-import com.sgo.sgo.data.SupplierRepository
-import com.sgo.sgo.entities.Address
-import com.sgo.sgo.entities.Client
-import com.sgo.sgo.entities.Person
-import com.sgo.sgo.entities.Supplier
-import com.sgo.sgo.entities.enums.AddressType
-import com.sgo.sgo.entities.enums.EntityType
-import com.sgo.sgo.entities.enums.PersonType
+import com.sgo.sgo.data.*
+import com.sgo.sgo.entities.*
+import com.sgo.sgo.entities.domains.AddressType
+import com.sgo.sgo.entities.domains.EntityType
+import com.sgo.sgo.entities.domains.PersonType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Configuration
 import java.time.Instant
-import java.util.*
 
 @Configuration
 class TestConfig : CommandLineRunner {
@@ -30,9 +23,22 @@ class TestConfig : CommandLineRunner {
     lateinit var addressRepository: AddressRepository
 
     @Autowired
+    lateinit var personAddressRepository: PersonAddressRepository
+
+    @Autowired
     lateinit var personRepository: PersonRepository
 
+    @Autowired
+    lateinit var addressTypeRepository: AddressTypeRepository
+
     override fun run(vararg args: String?) {
+
+        val at1 = AddressType(1, "HOME")
+        val at2 = AddressType(2, "PROFESSIONAL")
+        val at3 = AddressType(3, "WORK")
+
+        addressTypeRepository.saveAll(listOf(at1, at2, at3))
+
         val person1 = Person(0,EntityType.CLIENT, PersonType.INDIVIDUAL,"Cliente numero 1", null, 288867321846, Instant.now(), Instant.now())
         val person2 = Person(0,EntityType.SUPPLIER, PersonType.LEGAL,"Fornecedor numero 1", null, 4753496000125, Instant.now(), Instant.now())
         personRepository.saveAll(listOf(person1, person2))
@@ -46,13 +52,19 @@ class TestConfig : CommandLineRunner {
         fornecedor1.person = person2
         supplierRepository.save(fornecedor1)
 
-        val endereco1 = Address(0,AddressType.PERSONAL,"Rua X","10",null, "bairro teste",
-            "SP", "SP", "Brasil", "05303000", Instant.now(), Instant.now())
-        val endereco2 = Address(0,AddressType.PROFESSIONAL,"Rua Y","20",null, "bairro teste",
-                "SP", "SP", "Brasil", "05303000", Instant.now(), Instant.now())
-        endereco1.person = person1
-        endereco2.person = person2
-        addressRepository.saveAll(listOf(endereco1, endereco2))
+        val address1 = Address("Rua X","10",null, "bairro teste",
+            "SP", "SP", "Brasil", "05303000", at1)
+        val address2 = Address("Rua Y","20",null, "bairro teste",
+                "SP", "SP", "Brasil", "05303000", at1)
+
+        addressRepository.saveAll(listOf(address1, address2))
+
+        val pa1 = PersonAddress(Instant.now(), Instant.now(), address1)
+        val pa2 = PersonAddress(Instant.now(), Instant.now(), address2)
+
+        pa1.person = person1
+        pa2.person = person2
+        personAddressRepository.saveAll(listOf(pa1, pa2))
     }
 
 }

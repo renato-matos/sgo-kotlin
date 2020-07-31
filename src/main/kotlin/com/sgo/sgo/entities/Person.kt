@@ -1,7 +1,7 @@
 package com.sgo.sgo.entities
 
-import com.sgo.sgo.entities.enums.EntityType
-import com.sgo.sgo.entities.enums.PersonType
+import com.sgo.sgo.entities.domains.EntityType
+import com.sgo.sgo.entities.domains.PersonType
 import com.sun.istack.NotNull
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.Instant
@@ -24,6 +24,6 @@ data class Person (@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 
     @Schema(hidden = true)
     @OneToMany(mappedBy = "person")
-    lateinit var addresses: List<Address>
+    lateinit var personAddresses: List<PersonAddress>
 
 }
