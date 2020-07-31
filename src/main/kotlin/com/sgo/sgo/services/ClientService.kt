@@ -66,7 +66,7 @@ class ClientService {
     fun findById(id: Long): ClientOutputDTO {
         val client : Client? = clientRepository.findByIdOrNull(id)
         if(client==null) {
-            throw ResourceNotFoundException(id)
+            throw ResourceNotFoundException(Client::class.simpleName!!, id)
         } else {
             return toOutputDto(client)
         }

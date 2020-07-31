@@ -49,7 +49,7 @@ class PersonAddressService {
 
     fun fromInputDTO(input: AddressInputDTO) : PersonAddress {
         val addressType : AddressType = addressTypeRepository.findByIdOrNull(input.addressType)
-                ?: throw ResourceNotFoundException(input.addressType.toLong())
+                ?: throw ResourceNotFoundException(AddressType::class.simpleName!!, input.addressType.toLong())
         return PersonAddress(Instant.now(), Instant.now(), Address(input.street, input.number, input.complement,
                 input.neighborhood, input.city, input.state, input.country, input.zipCode, addressType))
     }
