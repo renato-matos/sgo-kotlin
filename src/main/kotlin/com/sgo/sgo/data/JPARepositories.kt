@@ -39,3 +39,9 @@ interface ContractTypeRepository: JpaRepository<ContractType, Int>
 interface ProjectStatusRepository: JpaRepository<ProjectStatus, Int>
 
 interface ProjectTypeRepository: JpaRepository<ProjectType, Int>
+
+interface PaymentMethodRepository: JpaRepository<PaymentMethod, Int>
+
+interface PaymentStatusRepository: JpaRepository<PaymentStatus, Int>
+
+interface PaymentTypeRepository: JpaRepository<PaymentType, Int>

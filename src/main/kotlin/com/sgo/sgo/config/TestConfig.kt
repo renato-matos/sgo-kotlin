@@ -41,6 +41,15 @@ class TestConfig : CommandLineRunner {
     @Autowired
     lateinit var projectTypeRepository: ProjectTypeRepository
 
+    @Autowired
+    lateinit var paymentMethodRepository: PaymentMethodRepository
+
+    @Autowired
+    lateinit var paymentStatusRepository: PaymentStatusRepository
+
+    @Autowired
+    lateinit var paymentTypeRepository: PaymentTypeRepository
+
     override fun run(vararg args: String?) {
 
         val at1 = AddressType(1, "HOME")
@@ -70,6 +79,22 @@ class TestConfig : CommandLineRunner {
         val pt2 = ProjectType(0, "PROJECT TYPE 2")
 
         projectTypeRepository.saveAll(listOf(pt1, pt2))
+
+        val pm1 = PaymentMethod(0, "CASH")
+        val pm2 = PaymentMethod(0, "CREDIT CARD")
+        val pm3 = PaymentMethod(0, "CHECK")
+
+        paymentMethodRepository.saveAll(listOf(pm1, pm2, pm3))
+
+        val psc1 = PaymentStatus(0,"SCHEDULED")
+        val psc2 = PaymentStatus(0,"PAID")
+
+        paymentStatusRepository.saveAll(listOf(psc1, psc2))
+
+        val pty1 = PaymentType(0,"PAYMENT TYPE 1")
+        val pty2 = PaymentType(0,"PAYMENT TYPE 2")
+
+        paymentTypeRepository.saveAll(listOf(pty1, pty2))
 
         val person1 = Person(0,EntityType.CLIENT, PersonType.INDIVIDUAL,"Cliente numero 1", null, 288867321846, Instant.now(), Instant.now())
         val person2 = Person(0,EntityType.SUPPLIER, PersonType.LEGAL,"Fornecedor numero 1", null, 4753496000125, Instant.now(), Instant.now())
