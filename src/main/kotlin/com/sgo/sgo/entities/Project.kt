@@ -1,10 +1,13 @@
 package com.sgo.sgo.entities
 
-import com.sgo.sgo.entities.domains.*
-import org.springframework.data.geo.Point
+import com.sgo.sgo.entities.domains.AdministrationType
+import com.sgo.sgo.entities.domains.ContractType
+import com.sgo.sgo.entities.domains.ProjectStatus
+import com.sgo.sgo.entities.domains.ProjectType
 import java.time.Instant
 import javax.persistence.*
 
+@Entity
 class Project(@Id
               @GeneratedValue(strategy= GenerationType.IDENTITY)
               val id : Long = 0,

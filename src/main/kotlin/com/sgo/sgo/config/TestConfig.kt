@@ -2,9 +2,7 @@ package com.sgo.sgo.config
 
 import com.sgo.sgo.data.*
 import com.sgo.sgo.entities.*
-import com.sgo.sgo.entities.domains.AddressType
-import com.sgo.sgo.entities.domains.EntityType
-import com.sgo.sgo.entities.domains.PersonType
+import com.sgo.sgo.entities.domains.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Configuration
@@ -31,6 +29,18 @@ class TestConfig : CommandLineRunner {
     @Autowired
     lateinit var addressTypeRepository: AddressTypeRepository
 
+    @Autowired
+    lateinit var administrationTypeRepository: AdministrationTypeRepository
+
+    @Autowired
+    lateinit var contractTypeRepository: ContractTypeRepository
+
+    @Autowired
+    lateinit var projectStatusRepository: ProjectStatusRepository
+
+    @Autowired
+    lateinit var projectTypeRepository: ProjectTypeRepository
+
     override fun run(vararg args: String?) {
 
         val at1 = AddressType(1, "HOME")
@@ -39,6 +49,27 @@ class TestConfig : CommandLineRunner {
         val at4 = AddressType(4, "BILLING")
 
         addressTypeRepository.saveAll(listOf(at1, at2, at3, at4))
+
+        val adt1 = AdministrationType(0,"ADMIN TYPE 1")
+        val adt2 = AdministrationType(0,"ADMIN TYPE 2")
+
+        administrationTypeRepository.saveAll(listOf(adt1, adt2))
+
+        val ct1 = ContractType(0,"CONTRACT TYPE 1")
+        val ct2 = ContractType(0,"CONTRACT TYPE 2")
+
+        contractTypeRepository.saveAll(listOf(ct1, ct2))
+
+        val ps1 = ProjectStatus(0, "INITIAL ESTIMATION")
+        val ps2 = ProjectStatus(0, "WIP")
+        val ps3 = ProjectStatus(0, "DONE")
+
+        projectStatusRepository.saveAll(listOf(ps1, ps2, ps3))
+
+        val pt1 = ProjectType(0, "PROJECT TYPE 1")
+        val pt2 = ProjectType(0, "PROJECT TYPE 2")
+
+        projectTypeRepository.saveAll(listOf(pt1, pt2))
 
         val person1 = Person(0,EntityType.CLIENT, PersonType.INDIVIDUAL,"Cliente numero 1", null, 288867321846, Instant.now(), Instant.now())
         val person2 = Person(0,EntityType.SUPPLIER, PersonType.LEGAL,"Fornecedor numero 1", null, 4753496000125, Instant.now(), Instant.now())

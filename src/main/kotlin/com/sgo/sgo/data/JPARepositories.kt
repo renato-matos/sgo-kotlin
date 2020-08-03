@@ -1,7 +1,7 @@
 package com.sgo.sgo.data
 
 import com.sgo.sgo.entities.*
-import com.sgo.sgo.entities.domains.AddressType
+import com.sgo.sgo.entities.domains.*
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 
@@ -23,4 +23,13 @@ interface ClientRepository : JpaRepository<Client, Long> {
 
 interface SupplierRepository : JpaRepository<Supplier, Long>
 
+// Domains
 interface AddressTypeRepository: JpaRepository<AddressType, Int>
+
+interface AdministrationTypeRepository: JpaRepository<AdministrationType, Int>
+
+interface ContractTypeRepository: JpaRepository<ContractType, Int>
+
+interface ProjectStatusRepository: JpaRepository<ProjectStatus, Int>
+
+interface ProjectTypeRepository: JpaRepository<ProjectType, Int>
