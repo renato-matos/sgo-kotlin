@@ -36,8 +36,9 @@ class TestConfig : CommandLineRunner {
         val at1 = AddressType(1, "HOME")
         val at2 = AddressType(2, "PROFESSIONAL")
         val at3 = AddressType(3, "WORK")
+        val at4 = AddressType(4, "BILLING")
 
-        addressTypeRepository.saveAll(listOf(at1, at2, at3))
+        addressTypeRepository.saveAll(listOf(at1, at2, at3, at4))
 
         val person1 = Person(0,EntityType.CLIENT, PersonType.INDIVIDUAL,"Cliente numero 1", null, 288867321846, Instant.now(), Instant.now())
         val person2 = Person(0,EntityType.SUPPLIER, PersonType.LEGAL,"Fornecedor numero 1", null, 4753496000125, Instant.now(), Instant.now())
