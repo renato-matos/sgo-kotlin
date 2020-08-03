@@ -59,8 +59,8 @@ class TestConfig : CommandLineRunner {
 
         addressRepository.saveAll(listOf(address1, address2))
 
-        val pa1 = PersonAddress(Instant.now(), Instant.now(), address1)
-        val pa2 = PersonAddress(Instant.now(), Instant.now(), address2)
+        val pa1 = PersonAddress(address1)
+        val pa2 = PersonAddress(address2)
 
         pa1.person = person1
         pa2.person = person2

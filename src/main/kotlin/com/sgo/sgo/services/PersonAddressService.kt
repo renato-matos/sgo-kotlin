@@ -33,7 +33,7 @@ class PersonAddressService {
     }
 
     fun toOutputDTO(personAddress: PersonAddress) : AddressOutputDTO {
-        return AddressOutputDTO(personAddress.id,
+        return AddressOutputDTO(personAddress.address.id,
                                 personAddress.address.addressType.id,
                                 personAddress.address.street,
                                 personAddress.address.number,
@@ -43,14 +43,14 @@ class PersonAddressService {
                                 personAddress.address.state,
                                 personAddress.address.country,
                                 personAddress.address.zipCode,
-                                personAddress.insertedOn,
-                                personAddress.lastUpdate)
+                                personAddress.address.insertedOn,
+                                personAddress.address.lastUpdate)
     }
 
     fun fromInputDTO(input: AddressInputDTO) : PersonAddress {
         val addressType : AddressType = addressTypeRepository.findByIdOrNull(input.addressType)
                 ?: throw ResourceNotFoundException(AddressType::class.simpleName!!, input.addressType.toLong())
-        return PersonAddress(Instant.now(), Instant.now(), Address(input.street, input.number, input.complement,
+        return PersonAddress(Address(input.street, input.number, input.complement,
                 input.neighborhood, input.city, input.state, input.country, input.zipCode, addressType))
     }
 
