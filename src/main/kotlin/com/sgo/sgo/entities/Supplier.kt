@@ -53,7 +53,7 @@ class SupplierInputDTO(@JsonProperty("name")
                         val comments: String?,
                         @JsonProperty("addresses")
                         @NotEmpty
-                        val personAddresses: List<PersonAddress>
+                        val addresses: List<AddressInputDTO>
 )
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -84,7 +84,7 @@ class SupplierOutputDTO(@JsonProperty("supplier_id")
                         @JsonProperty("comments")
                 val comments: String?,
                         @JsonProperty("addresses")
-                val personAddresses: List<PersonAddress>,
+                val addresses: List<AddressOutputDTO>,
                         @JsonProperty("inserted_on")
                 @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
                 val insertedOn: Instant,

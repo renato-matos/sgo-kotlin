@@ -21,7 +21,13 @@ interface ClientRepository : JpaRepository<Client, Long> {
     fun findByName(name: String) : List<Client?>
 }
 
-interface SupplierRepository : JpaRepository<Supplier, Long>
+interface SupplierRepository : JpaRepository<Supplier, Long> {
+    @Query("select s from Supplier s JOIN s.person p where p.document = ?1")
+    fun findByDocument(document: Long) : Supplier?
+
+    @Query("select s from Supplier s JOIN s.person p where p.name like ?1")
+    fun findByName(name: String) : List<Supplier?>
+}
 
 // Domains
 interface AddressTypeRepository: JpaRepository<AddressType, Int>
