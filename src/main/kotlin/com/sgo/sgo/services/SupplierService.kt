@@ -20,6 +20,9 @@ class SupplierService {
     @Autowired
     lateinit var personAddressService: PersonAddressService
 
+    @Autowired
+    lateinit var phoneService: PhoneService
+
     fun listAll() : List<SupplierOutputDTO> {
         val suppliers = supplierRepository.findAll()
         val suppliersDTO : MutableList<SupplierOutputDTO> = mutableListOf()
@@ -39,10 +42,15 @@ class SupplierService {
             addresses.add(personAddressService.toOutputDTO(it))
         }
 
+        val phones : MutableList<PhoneOutputDTO> = mutableListOf()
+        supplier.person.phones.forEach {
+            phones.add(phoneService.toOutputDto(it))
+        }
+
         return SupplierOutputDTO(supplier.id, supplier.person.id, supplier.person.name,
                 supplier.person.personType.toString(), supplier.person.document, supplier.person.rg,
                 supplier.activitySegment, supplier.contact, supplier.ccm, supplier.ie, supplier.email,
-                supplier.site, supplier.comments, addresses, supplier.person.insertedOn, supplier.person.lastUpdate)
+                supplier.site, supplier.comments, addresses, phones, supplier.person.insertedOn, supplier.person.lastUpdate)
     }
 
     fun fromInputDTO(supplierDTO: SupplierInputDTO): Supplier {
@@ -55,7 +63,12 @@ class SupplierService {
         supplierDTO.addresses.forEach {
             personAddresses.add(personAddressService.fromInputDTO(it))
         }
+        val phones : MutableList<Phone> = mutableListOf()
+        supplierDTO.phones.forEach {
+            phones.add(phoneService.fromInputDto(it))
+        }
         supplier.person.personAddresses = personAddresses
+        supplier.person.phones = phones
         return supplier
     }
 

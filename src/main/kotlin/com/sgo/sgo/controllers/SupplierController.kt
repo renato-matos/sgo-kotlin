@@ -4,10 +4,7 @@ import com.sgo.sgo.entities.ClientInputDTO
 import com.sgo.sgo.entities.ClientOutputDTO
 import com.sgo.sgo.entities.SupplierInputDTO
 import com.sgo.sgo.entities.SupplierOutputDTO
-import com.sgo.sgo.services.ClientService
-import com.sgo.sgo.services.PersonAddressService
-import com.sgo.sgo.services.PersonService
-import com.sgo.sgo.services.SupplierService
+import com.sgo.sgo.services.*
 import com.sgo.sgo.utils.decodeParam
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.beans.factory.annotation.Autowired
@@ -29,6 +26,9 @@ class SupplierController {
 
     @Autowired
     lateinit var personAddressService: PersonAddressService
+
+    @Autowired
+    lateinit var phoneService: PhoneService
 
     @GetMapping
     @Operation(summary = "List suppliers")
@@ -55,6 +55,10 @@ class SupplierController {
         supplier.person.personAddresses.forEach {
             it.person=personInserted
             personAddressService.insert(it)
+        }
+        supplier.person.phones.forEach {
+            it.person=personInserted
+            phoneService.insert(it)
         }
         val supplierInserted = supplierService.insert(supplier)
         val uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(supplierInserted.id).toUri()

@@ -50,6 +50,9 @@ class TestConfig : CommandLineRunner {
     @Autowired
     lateinit var paymentTypeRepository: PaymentTypeRepository
 
+    @Autowired
+    lateinit var phoneTypeRepository: PhoneTypeRepository
+
     override fun run(vararg args: String?) {
 
         val at1 = AddressType(1, "HOME")
@@ -95,6 +98,12 @@ class TestConfig : CommandLineRunner {
         val pty2 = PaymentType(0,"PAYMENT TYPE 2")
 
         paymentTypeRepository.saveAll(listOf(pty1, pty2))
+
+        val phonet1 = PhoneType(0,"MOBILE")
+        val phonet2 = PhoneType(0,"HOME")
+        val phonet3 = PhoneType(0,"OFFICE")
+
+        phoneTypeRepository.saveAll((listOf(phonet1, phonet2, phonet3)))
 
         val person1 = Person(0,EntityType.CLIENT, PersonType.INDIVIDUAL,"Cliente numero 1", null, 288867321846, Instant.now(), Instant.now())
         val person2 = Person(0,EntityType.SUPPLIER, PersonType.LEGAL,"Fornecedor numero 1", null, 4753496000125, Instant.now(), Instant.now())

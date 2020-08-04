@@ -26,4 +26,7 @@ data class Person (@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @OneToMany(mappedBy = "person")
     lateinit var personAddresses: List<PersonAddress>
 
+    @Schema(hidden = true)
+    @OneToMany(mappedBy = "person")
+    lateinit var phones: List<Phone>
 }

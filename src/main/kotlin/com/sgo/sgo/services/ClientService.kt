@@ -19,6 +19,9 @@ class ClientService {
     @Autowired
     lateinit var personAddressService: PersonAddressService
 
+    @Autowired
+    lateinit var phoneService: PhoneService
+
     fun listAll() : List<ClientOutputDTO> {
         val clients = clientRepository.findAll()
         val clientsDTO : MutableList<ClientOutputDTO> = mutableListOf()
@@ -37,7 +40,10 @@ class ClientService {
         client.person.personAddresses.forEach {
             addresses.add(personAddressService.toOutputDTO(it))
         }
-
+        val phones : MutableList<PhoneOutputDTO> = mutableListOf()
+        client.person.phones.forEach {
+            phones.add(phoneService.toOutputDto(it))
+        }
         return ClientOutputDTO(
                 client.id,
                 client.person.id,
@@ -46,6 +52,7 @@ class ClientService {
                 client.person.document,
                 client.person.rg,
                 addresses,
+                phones,
                 client.person.insertedOn,
                 client.person.lastUpdate)
     }
@@ -60,6 +67,11 @@ class ClientService {
             personAddresses.add(personAddressService.fromInputDTO(it))
         }
         client.person.personAddresses = personAddresses
+        val phones : MutableList<Phone> = mutableListOf()
+        clientDTO.phones.forEach {
+            phones.add(phoneService.fromInputDto(it))
+        }
+        client.person.phones = phones
         return client
     }
 

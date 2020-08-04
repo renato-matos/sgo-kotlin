@@ -53,42 +53,47 @@ class SupplierInputDTO(@JsonProperty("name")
                         val comments: String?,
                         @JsonProperty("addresses")
                         @NotEmpty
-                        val addresses: List<AddressInputDTO>
+                        val addresses: List<AddressInputDTO>,
+                        @JsonProperty("phones")
+                        @NotEmpty
+                        val phones: List<PhoneInputDTO>
 )
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class SupplierOutputDTO(@JsonProperty("supplier_id")
-                val supplierId: Long,
+                        val supplierId: Long,
                         @JsonProperty("person_id")
-                val personId: Long,
+                        val personId: Long,
                         @JsonProperty("name")
-                val name: String,
+                        val name: String,
                         @JsonProperty("person_type")
-                val personType: String,
+                        val personType: String,
                         @JsonProperty("document")
-                val document: Long,
+                        val document: Long,
                         @JsonProperty("rg")
-                val rg: String?,
+                        val rg: String?,
                         @JsonProperty("activity_segment")
-                val activeSegment: String,
+                        val activeSegment: String,
                         @JsonProperty("contact")
-                val contact: String,
+                        val contact: String,
                         @JsonProperty("ccm")
-                val ccm: String?,
+                        val ccm: String?,
                         @JsonProperty("ie")
-                val ie: String?,
+                        val ie: String?,
                         @JsonProperty("email")
-                val email: String?,
+                        val email: String?,
                         @JsonProperty("site")
-                val site: String?,
+                        val site: String?,
                         @JsonProperty("comments")
-                val comments: String?,
+                        val comments: String?,
                         @JsonProperty("addresses")
-                val addresses: List<AddressOutputDTO>,
+                        val addresses: List<AddressOutputDTO>,
+                        @JsonProperty("phones")
+                        val phones: List<PhoneOutputDTO>,
                         @JsonProperty("inserted_on")
-                @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
-                val insertedOn: Instant,
+                        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+                        val insertedOn: Instant,
                         @JsonProperty("last_update")
-                @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
-                val lastUpdate: Instant
+                        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+                        val lastUpdate: Instant
 )

@@ -9,6 +9,8 @@ interface PersonAddressRepository : JpaRepository<PersonAddress, Long>
 
 interface AddressRepository: JpaRepository<Address, Long>
 
+interface PhoneRepository: JpaRepository<Phone, Long>
+
 interface PersonRepository : JpaRepository<Person, Long> {
     fun findByDocument(document: Long) : Person?
 }
@@ -45,3 +47,5 @@ interface PaymentMethodRepository: JpaRepository<PaymentMethod, Int>
 interface PaymentStatusRepository: JpaRepository<PaymentStatus, Int>
 
 interface PaymentTypeRepository: JpaRepository<PaymentType, Int>
+
+interface PhoneTypeRepository: JpaRepository<PhoneType, Int>

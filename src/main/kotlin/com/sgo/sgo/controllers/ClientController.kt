@@ -5,6 +5,7 @@ import com.sgo.sgo.entities.ClientOutputDTO
 import com.sgo.sgo.services.PersonAddressService
 import com.sgo.sgo.services.ClientService
 import com.sgo.sgo.services.PersonService
+import com.sgo.sgo.services.PhoneService
 import com.sgo.sgo.utils.decodeParam
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.beans.factory.annotation.Autowired
@@ -26,6 +27,9 @@ class ClientController {
 
     @Autowired
     lateinit var personAddressService: PersonAddressService
+
+    @Autowired
+    lateinit var phoneService: PhoneService
 
     @GetMapping
     @Operation(summary = "List clients")
@@ -52,6 +56,10 @@ class ClientController {
         client.person.personAddresses.forEach {
             it.person=personInserted
             personAddressService.insert(it)
+        }
+        client.person.phones.forEach {
+            it.person=personInserted
+            phoneService.insert(it)
         }
         val clientInserted = clientService.insert(client)
         val uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(clientInserted.id).toUri()
