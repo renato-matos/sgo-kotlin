@@ -8,4 +8,4 @@ import javax.persistence.Id
 @Entity
 data class AddressType(@Id @GeneratedValue(strategy = GenerationType.AUTO)
                        val id : Int,
-                       val name: String)
+                       val description: String)

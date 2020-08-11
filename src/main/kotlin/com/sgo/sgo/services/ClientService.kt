@@ -98,13 +98,11 @@ class ClientService {
 
         if (name!=null) {
             val clientsFound : List<Client?> = clientRepository.findByName("%$name%")
-            return if (clientsFound != null) {
+            return run {
                 clientsFound.forEach {
                     clients.add(toOutputDto(it!!))
                 }
                 clients
-            } else {
-                null
             }
         }
         return listAll()

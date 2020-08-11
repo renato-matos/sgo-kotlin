@@ -95,13 +95,11 @@ class SupplierService {
 
         if (name!=null) {
             val suppliersFound : List<Supplier?> = supplierRepository.findByName("%$name%")
-            return if (suppliersFound != null) {
+            return run {
                 suppliersFound.forEach {
                     suppliers.add(toOutputDto(it!!))
                 }
                 suppliers
-            } else {
-                null
             }
         }
         return listAll()
