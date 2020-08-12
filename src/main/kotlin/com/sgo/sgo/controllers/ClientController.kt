@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import javax.annotation.security.RolesAllowed
 import javax.transaction.Transactional
 import javax.validation.Valid
 
@@ -32,6 +33,7 @@ class ClientController {
     lateinit var phoneService: PhoneService
 
     @GetMapping
+    @RolesAllowed("user")
     @Operation(summary = "List clients")
     fun listAll(@RequestParam(value="name", required = false) name: String?,
                 @RequestParam(value="document", required = false) document: Long?) : ResponseEntity<List<ClientOutputDTO>> {

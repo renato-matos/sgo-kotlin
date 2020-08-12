@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import javax.annotation.security.RolesAllowed
 
 @RestController
 @RequestMapping("/address-types")
@@ -20,6 +21,7 @@ class AddressTypeController {
     lateinit var addressTypeService: AddressTypeService
 
     @GetMapping
+    @RolesAllowed("admin")
     @Operation(summary = "List address types")
     fun listAll() : ResponseEntity<List<AddressType>> {
        var addressTypes = addressTypeService.findAll()
