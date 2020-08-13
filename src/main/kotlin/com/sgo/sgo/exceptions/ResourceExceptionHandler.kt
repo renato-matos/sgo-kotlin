@@ -63,4 +63,12 @@ class ResourceExceptionHandler {
         return ResponseEntity.status(status).body(se)
     }
 
+    @ExceptionHandler(UnauthorizedException::class)
+    fun unauthorizedException(e: UnauthorizedException, request: HttpServletRequest) : ResponseEntity<StandardError> {
+        val error = "Unauthorized"
+        val status: HttpStatus = HttpStatus.UNAUTHORIZED
+        val se = e.message?.let { StandardError(Instant.now(), status.value(), error, it, request.requestURI) }
+        return ResponseEntity.status(status).body(se)
+    }
+
 }
