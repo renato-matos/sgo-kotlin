@@ -8,6 +8,7 @@ import com.sgo.sgo.services.PersonService
 import com.sgo.sgo.services.PhoneService
 import com.sgo.sgo.utils.decodeParam
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -18,6 +19,7 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/clients")
+@Tag(name = "Clients", description = "Manage clients")
 class ClientController {
 
     @Autowired
@@ -38,7 +40,7 @@ class ClientController {
     fun listAll(@RequestParam(value="name", required = false) name: String?,
                 @RequestParam(value="document", required = false) document: Long?) : ResponseEntity<List<ClientOutputDTO>> {
         val nameToBeFound: String? = if (name!=null) decodeParam(name) else null
-        var clients = clientService.listClients(document, nameToBeFound)
+        val clients = clientService.listClients(document, nameToBeFound)
         return ResponseEntity.ok().body(clients)
     }
 

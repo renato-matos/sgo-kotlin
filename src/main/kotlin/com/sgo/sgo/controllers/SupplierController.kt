@@ -7,6 +7,7 @@ import com.sgo.sgo.entities.SupplierOutputDTO
 import com.sgo.sgo.services.*
 import com.sgo.sgo.utils.decodeParam
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -16,6 +17,7 @@ import javax.validation.Valid
 
 @RestController
 @RequestMapping("/suppliers")
+@Tag(name = "Suppliers", description = "Manage suppliers")
 class SupplierController {
 
     @Autowired
@@ -35,7 +37,7 @@ class SupplierController {
     fun listAll(@RequestParam(value = "name", required = false) name: String?,
                 @RequestParam(value = "document", required = false) document: Long?): ResponseEntity<List<SupplierOutputDTO>> {
         val nameToBeFound: String? = if (name != null) decodeParam(name) else null
-        var suppliers = supplierService.listSuppliers(document, nameToBeFound)
+        val suppliers = supplierService.listSuppliers(document, nameToBeFound)
         return ResponseEntity.ok().body(suppliers)
     }
 
