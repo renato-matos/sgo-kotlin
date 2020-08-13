@@ -23,7 +23,8 @@ class CustomAuthenticationController {
 
         val auth = customAuthenticationService.authenticateUser(authenticationRequest.username,
                                                                 authenticationRequest.password)
-        val authResponse: AuthenticationResponse = AuthenticationResponse(auth.accessToken)
+        val authResponse: AuthenticationResponse = AuthenticationResponse(auth.accessToken, auth.expiresIn,
+                                                                auth.refreshToken, auth.refreshExpiresIn)
         return ResponseEntity.ok().body(authResponse)
     }
 
